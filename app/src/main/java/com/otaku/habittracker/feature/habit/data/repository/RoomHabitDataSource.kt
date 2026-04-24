@@ -13,9 +13,9 @@ import com.otaku.habittracker.feature.habit.domain.model.HabitCompletion
 import com.otaku.habittracker.feature.habit.domain.repository.HabitLocalDataSource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.time.Instant
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZonedDateTime
 
 class RoomHabitDataSource(
     private val habitDao: HabitDao
@@ -57,11 +57,9 @@ class RoomHabitDataSource(
         }
     }
 
-    override suspend fun toggleCompletion(habitId: Long, dateMillis: Long): EmptyResult<DataError.Local> {
+    override suspend fun toggleCompletion(habitId: Long, dateTime: ZonedDateTime): EmptyResult<DataError.Local> {
         return try {
-            val localDate = Instant.ofEpochMilli(dateMillis)
-                .atZone(ZoneId.systemDefault())
-                .toLocalDate()
+            val localDate = dateTime.toLocalDate()
             val startOfDay = localDate.atStartOfDay(ZoneId.systemDefault())
                 .toInstant()
                 .toEpochMilli()
@@ -77,7 +75,7 @@ class RoomHabitDataSource(
                 habitDao.insertCompletion(
                     HabitCompletionEntity(
                         habitId = habitId,
-                        completedAtMillis = dateMillis
+                        completedAtMillis = dateTime.toInstant().toEpochMilli()
                     )
                 )
             }
