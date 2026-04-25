@@ -15,6 +15,7 @@ data class HabitDetailState(
     ),
     val isSaving: Boolean = false,
     val isDeleting: Boolean = false,
+    val isIconPickerExpanded: Boolean = false,
     val showDeleteDialog: Boolean = false,
     val error: UiText? = null
 ) {

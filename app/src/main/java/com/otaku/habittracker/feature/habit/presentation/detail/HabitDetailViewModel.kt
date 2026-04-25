@@ -39,11 +39,14 @@ class HabitDetailViewModel(
                             habitId = h.id,
                             name = h.name,
                             icon = h.icon,
-                            frequency = h.frequency
+                            frequency = h.frequency,
+                            isIconPickerExpanded = false
                         )
                     }
                 }
             }
+        } else {
+            _state.update { it.copy(isIconPickerExpanded = true) }
         }
     }
 
@@ -61,6 +64,9 @@ class HabitDetailViewModel(
                         frequency = it.frequency.toggleDay(action.day)
                     )
                 }
+            }
+            HabitDetailAction.OnToggleIconPicker -> {
+                _state.update { it.copy(isIconPickerExpanded = !it.isIconPickerExpanded) }
             }
             HabitDetailAction.OnSaveClick -> saveHabit()
             HabitDetailAction.OnDiscardClick -> {

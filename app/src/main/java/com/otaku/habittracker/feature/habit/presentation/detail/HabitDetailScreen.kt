@@ -117,16 +117,19 @@ fun HabitDetailScreen(
             // Icon Picker Area
             IconHeader(
                 icon = state.icon,
-                isEditing = state.isEditing
+                isEditing = state.isEditing,
+                onClick = { onAction(HabitDetailAction.OnToggleIconPicker) }
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
+            if (state.isIconPickerExpanded) {
+                Spacer(modifier = Modifier.height(24.dp))
 
-            // Icon Grid
-            IconPickerGrid(
-                selectedIcon = state.icon,
-                onIconSelected = { onAction(HabitDetailAction.OnIconChange(it)) }
-            )
+                // Icon Grid
+                IconPickerGrid(
+                    selectedIcon = state.icon,
+                    onIconSelected = { onAction(HabitDetailAction.OnIconChange(it)) }
+                )
+            }
 
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -184,12 +187,15 @@ fun HabitDetailScreen(
 @Composable
 private fun IconHeader(
     icon: HabitIcon,
-    isEditing: Boolean
+    isEditing: Boolean,
+    onClick: () -> Unit
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(14.dp),
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onClick() }
     ) {
         val borderModifier = if (isEditing) {
             Modifier.border(2.dp, MaterialTheme.colorScheme.primary, RoundedCornerShape(20.dp))
