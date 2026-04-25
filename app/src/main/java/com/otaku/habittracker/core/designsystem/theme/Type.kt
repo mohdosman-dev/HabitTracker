@@ -57,6 +57,16 @@ val HabitTrackerTypography = Typography(
 
 // Custom styles that don't fit Material 3 exactly
 data class CustomTypography(
+    val displayLarge: TextStyle = TextStyle(
+        fontFamily = Manrope,
+        fontWeight = FontWeight.ExtraBold,
+        fontSize = 26.sp
+    ),
+    val titleLarge: TextStyle = TextStyle(
+        fontFamily = Inter,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 16.sp
+    ),
     val statNumber: TextStyle = TextStyle(
         fontFamily = Manrope,
         fontWeight = FontWeight.ExtraBold,

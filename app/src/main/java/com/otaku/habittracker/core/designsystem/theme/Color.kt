@@ -47,12 +47,17 @@ val DarkColorScheme = darkColorScheme(
 
 @Immutable
 data class HabitTrackerColors(
+    val surface: Color = HabitTrackerSurface,
     val surfaceElevated: Color = HabitTrackerSurfaceElevated,
     val surfaceBright: Color = HabitTrackerSurfaceBright,
     val success: Color = HabitTrackerSuccess,
     val streak: Color = HabitTrackerStreak,
     val accent: Color = HabitTrackerAccent,
+    val destructive: Color = HabitTrackerDestructive,
+    val textPrimary: Color = HabitTrackerTextPrimary,
+    val textSecondary: Color = HabitTrackerTextSecondary,
     val textTertiary: Color = HabitTrackerTextTertiary,
+    val border: Color = HabitTrackerBorder,
     val primaryLight: Color = HabitTrackerPrimaryLight,
     val primaryDark: Color = HabitTrackerPrimaryDark
 )

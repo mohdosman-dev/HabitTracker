@@ -7,7 +7,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.rememberNavController
 import com.otaku.habittracker.core.designsystem.theme.HabitTrackerTheme
+import com.otaku.habittracker.feature.habit.presentation.navigation.TodayRoute
+import com.otaku.habittracker.feature.habit.presentation.navigation.habitGraph
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,8 +19,12 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HabitTrackerTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-
+                val navController = rememberNavController()
+                NavHost(
+                    navController = navController,
+                    startDestination = TodayRoute
+                ) {
+                    habitGraph(navController = navController)
                 }
             }
         }
