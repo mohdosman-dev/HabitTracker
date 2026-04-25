@@ -1,9 +1,9 @@
 package com.otaku.habittracker.feature.habit.presentation.detail
 
 import com.otaku.habittracker.core.presentation.UiText
-import com.otaku.habittracker.core.designsystem.components.DayOfWeek
 import com.otaku.habittracker.feature.habit.domain.model.HabitFrequency
 import com.otaku.habittracker.feature.habit.domain.model.HabitIcon
+import java.time.ZonedDateTime
 
 data class HabitDetailState(
     val habitId: Long? = null,
@@ -17,7 +17,8 @@ data class HabitDetailState(
     val isDeleting: Boolean = false,
     val isIconPickerExpanded: Boolean = false,
     val showDeleteDialog: Boolean = false,
-    val error: UiText? = null
+    val error: UiText? = null,
+    val createdAt: ZonedDateTime? = null,
 ) {
     val isEditing: Boolean = habitId != null
     val canSave: Boolean = name.isNotBlank() && 

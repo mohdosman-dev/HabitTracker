@@ -21,36 +21,80 @@ object DatabaseSeeder {
                 name = "Morning Run",
                 icon = HabitIcon.RUN,
                 createdAt = ZonedDateTime.now().minusWeeks(6),
-                frequency = HabitFrequency(true, true, true, true, true, true, true)
+                frequency = HabitFrequency(
+                    monday = true,
+                    tuesday = true,
+                    wednesday = true,
+                    thursday = true,
+                    friday = true,
+                    saturday = true,
+                    sunday = true
+                )
             ),
             Habit(
                 name = "Read 30min",
                 icon = HabitIcon.READ,
                 createdAt = ZonedDateTime.now().minusWeeks(6),
-                frequency = HabitFrequency(true, true, true, true, true, false, false)
+                frequency = HabitFrequency(
+                    monday = true,
+                    tuesday = true,
+                    wednesday = true,
+                    thursday = true,
+                    friday = true,
+                    saturday = false,
+                    sunday = false
+                )
             ),
             Habit(
                 name = "Meditate",
                 icon = HabitIcon.MEDITATE,
                 createdAt = ZonedDateTime.now().minusWeeks(6),
-                frequency = HabitFrequency(true, false, true, false, true, false, true)
+                frequency = HabitFrequency(
+                    monday = true,
+                    tuesday = false,
+                    wednesday = true,
+                    thursday = false,
+                    friday = true,
+                    saturday = false,
+                    sunday = true
+                )
             ),
             Habit(
                 name = "Drink Water",
                 icon = HabitIcon.WATER,
                 createdAt = ZonedDateTime.now().minusWeeks(4),
-                frequency = HabitFrequency(true, true, true, true, true, true, true)
+                frequency = HabitFrequency(
+                    monday = true,
+                    tuesday = true,
+                    wednesday = true,
+                    thursday = true,
+                    friday = true,
+                    saturday = true,
+                    sunday = true
+                )
             ),
             Habit(
                 name = "Code 1hr",
                 icon = HabitIcon.CODE,
                 createdAt = ZonedDateTime.now().minusWeeks(5),
-                frequency = HabitFrequency(true, true, true, true, true, true, true)
+                frequency = HabitFrequency(
+                    monday = true,
+                    tuesday = true,
+                    wednesday = true,
+                    thursday = true,
+                    friday = true,
+                    saturday = true,
+                    sunday = true
+                )
             )
         )
 
         habits.forEach { habit ->
-            repository.insertHabit(habit)
+            val result = repository.insertHabit(habit)
+            if (result is Error) {
+                // Bail out instead of seeding completions against missing habits.
+                return
+            }
         }
 
         // Fetch them back to get generated IDs

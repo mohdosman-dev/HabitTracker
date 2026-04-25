@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.otaku.habittracker.core.designsystem.components.DayOfWeek
+import com.otaku.habittracker.core.domain.onFailure
 import com.otaku.habittracker.core.domain.onSuccess
 import com.otaku.habittracker.feature.habit.domain.model.Habit
 import com.otaku.habittracker.feature.habit.domain.repository.HabitLocalDataSource
@@ -18,7 +19,7 @@ import java.time.ZonedDateTime
 
 class HabitDetailViewModel(
     private val repository: HabitLocalDataSource,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(HabitDetailState())
@@ -40,7 +41,8 @@ class HabitDetailViewModel(
                             name = h.name,
                             icon = h.icon,
                             frequency = h.frequency,
-                            isIconPickerExpanded = false
+                            createdAt = h.createdAt,
+                            isIconPickerExpanded = false,
                         )
                     }
                 }
@@ -92,12 +94,15 @@ class HabitDetailViewModel(
                 id = currentState.habitId ?: 0,
                 name = currentState.name,
                 icon = currentState.icon,
-                createdAt = ZonedDateTime.now(),
+                createdAt = currentState.createdAt ?: ZonedDateTime.now(),
                 frequency = currentState.frequency
             )
             repository.insertHabit(habit)
                 .onSuccess {
                     _events.send(HabitDetailEvent.HabitSaved)
+                }
+                .onFailure {
+                    _events.send(HabitDetailEvent.HabitSavedError(it))
                 }
             _state.update { it.copy(isSaving = false) }
         }
@@ -110,6 +115,9 @@ class HabitDetailViewModel(
             repository.deleteHabit(habitId)
                 .onSuccess {
                     _events.send(HabitDetailEvent.HabitDeleted)
+                }
+                .onFailure {
+                    _events.send(HabitDetailEvent.HabitDeletedError(it))
                 }
             _state.update { it.copy(isDeleting = false) }
         }

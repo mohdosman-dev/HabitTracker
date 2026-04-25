@@ -39,7 +39,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.otaku.habittracker.core.designsystem.components.DayPickerRow
 import com.otaku.habittracker.core.designsystem.components.HabitButton
@@ -62,6 +61,8 @@ fun HabitDetailRoot(
             HabitDetailEvent.HabitSaved,
             HabitDetailEvent.HabitDeleted,
             HabitDetailEvent.NavigateBack -> onNavigateBack()
+            is HabitDetailEvent.HabitDeletedError -> TODO()
+            is HabitDetailEvent.HabitSavedError -> TODO()
         }
     }
 
@@ -356,7 +357,7 @@ private fun DeleteConfirmationDialog(
 private fun HabitDetailScreenPreview() {
     HabitTrackerTheme {
         HabitDetailScreen(
-            state = HabitDetailState(name = "Morning Run"),
+            state = HabitDetailState(name = "Morning Run",),
             onAction = {}
         )
     }

@@ -1,5 +1,6 @@
 package com.otaku.habittracker.feature.habit.data.repository
 
+import android.database.sqlite.SQLiteConstraintException
 import com.otaku.habittracker.core.domain.DataError
 import com.otaku.habittracker.core.domain.EmptyResult
 import com.otaku.habittracker.core.domain.Result
@@ -76,6 +77,8 @@ class RoomHabitDataSource(
         return try {
             habitDao.insertHabit(habit.toHabitEntity())
             Result.Success(Unit)
+        } catch (e: SQLiteConstraintException) {
+            Result.Error(DataError.Local.ALREADY_EXISTS)
         } catch (e: Exception) {
             Result.Error(DataError.Local.UNKNOWN)
         }
@@ -86,7 +89,7 @@ class RoomHabitDataSource(
             habitDao.deleteHabit(habitId)
             Result.Success(Unit)
         } catch (e: Exception) {
-            Result.Error(DataError.Local.UNKNOWN)
+            Result.Error(DataError.Local.IO_ERROR)
         }
     }
 
