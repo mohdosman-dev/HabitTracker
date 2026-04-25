@@ -35,4 +35,4 @@ Before working on a layer, **always load the corresponding skill first**.
 - **Single module, layered packages.** Use the same package structure as the `android-module-structure` skill (core, feature, etc.) but as packages within `:app`, not separate modules.
 - **No tests unless asked.** Do not write tests unless the user explicitly requests them.
 - **Lazy mockup loading.** When building UI, read the HTML mockup file for that specific screen only — do not read the entire file upfront.
-- **Git hygiene.** `git add` every new file immediately after creating it. Create meaningful, modular commits at logical checkpoints — don't batch everything into one giant commit.
+- **Git hygiene.** `git add` every new file immediately after creating it. Create a branch for each module or feature that you've finished and ask for code review before merge it to the main branch, Create meaningful, modular commits at logical checkpoints — don't batch everything into one giant commit.

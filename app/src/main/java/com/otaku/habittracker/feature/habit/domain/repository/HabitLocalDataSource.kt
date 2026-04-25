@@ -4,11 +4,13 @@ import com.otaku.habittracker.core.domain.DataError
 import com.otaku.habittracker.core.domain.EmptyResult
 import com.otaku.habittracker.feature.habit.domain.model.Habit
 import com.otaku.habittracker.feature.habit.domain.model.HabitCompletion
+import com.otaku.habittracker.feature.habit.domain.model.HabitWithStats
 import kotlinx.coroutines.flow.Flow
 import java.time.ZonedDateTime
 
 interface HabitLocalDataSource {
     fun getHabits(): Flow<List<Habit>>
+    fun getHabitsWithStats(): Flow<List<HabitWithStats>>
     fun getCompletions(habitId: Long): Flow<List<HabitCompletion>>
     fun getAllCompletions(): Flow<List<HabitCompletion>>
     suspend fun insertHabit(habit: Habit): EmptyResult<DataError.Local>

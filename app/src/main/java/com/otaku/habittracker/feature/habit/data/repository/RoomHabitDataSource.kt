@@ -10,9 +10,14 @@ import com.otaku.habittracker.feature.habit.data.mapper.toHabitCompletion
 import com.otaku.habittracker.feature.habit.data.mapper.toHabitEntity
 import com.otaku.habittracker.feature.habit.domain.model.Habit
 import com.otaku.habittracker.feature.habit.domain.model.HabitCompletion
+import com.otaku.habittracker.feature.habit.domain.model.HabitStats
+import com.otaku.habittracker.feature.habit.domain.model.HabitWithStats
 import com.otaku.habittracker.feature.habit.domain.repository.HabitLocalDataSource
+import com.otaku.habittracker.feature.habit.domain.util.StreakCalculator
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
+import java.time.LocalDate
 import java.time.LocalTime
 import java.time.ZoneId
 import java.time.ZonedDateTime
@@ -24,6 +29,34 @@ class RoomHabitDataSource(
     override fun getHabits(): Flow<List<Habit>> {
         return habitDao.getAllHabits().map { entities ->
             entities.map { it.toHabit() }
+        }
+    }
+
+    override fun getHabitsWithStats(): Flow<List<HabitWithStats>> {
+        return combine(
+            habitDao.getAllHabits(),
+            habitDao.getAllCompletions()
+        ) { habitEntities, completionEntities ->
+            val habits = habitEntities.map { it.toHabit() }
+            val completions = completionEntities.map { it.toHabitCompletion() }
+            
+            val today = LocalDate.now()
+            
+            habits.map { habit ->
+                val habitCompletions = completions
+                    .filter { it.habitId == habit.id }
+                    .map { it.completedAt.toLocalDate() }
+                    .toSet()
+                
+                HabitWithStats(
+                    habit = habit,
+                    stats = HabitStats(
+                        currentStreak = StreakCalculator.calculateCurrentStreak(habit, habitCompletions, today),
+                        bestStreak = StreakCalculator.calculateBestStreak(habit, habitCompletions, today),
+                        isCompletedToday = habitCompletions.contains(today)
+                    )
+                )
+            }
         }
     }
 
