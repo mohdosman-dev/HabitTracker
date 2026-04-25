@@ -28,7 +28,6 @@ fun HabitTopAppBar(
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .statusBarsPadding()
             .padding(horizontal = 20.dp, vertical = 16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {

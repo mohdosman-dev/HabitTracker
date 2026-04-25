@@ -41,14 +41,9 @@ class TodayViewModel(
                     repository.toggleCompletion(action.habitId, ZonedDateTime.now())
                 }
             }
-            is TodayAction.OnHabitClick -> {
+            is TodayAction.OnHabitDetailClick -> {
                 viewModelScope.launch {
-                    _events.send(TodayEvent.NavigateToEditHabit(action.habitId))
-                }
-            }
-            TodayAction.OnAddHabitClick -> {
-                viewModelScope.launch {
-                    _events.send(TodayEvent.NavigateToCreateHabit)
+                    _events.send(TodayEvent.NavigateToHabitDetail(action.habitId))
                 }
             }
             TodayAction.OnStatsClick -> {

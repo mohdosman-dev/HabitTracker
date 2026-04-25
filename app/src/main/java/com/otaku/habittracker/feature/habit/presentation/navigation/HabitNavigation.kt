@@ -4,7 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
-import com.otaku.habittracker.feature.habit.presentation.editor.EditorRoot
+import com.otaku.habittracker.feature.habit.presentation.detail.HabitDetailRoot
 import com.otaku.habittracker.feature.habit.presentation.stats.StatsRoot
 import com.otaku.habittracker.feature.habit.presentation.today.TodayRoot
 import kotlinx.serialization.Serializable
@@ -16,18 +16,14 @@ data object TodayRoute
 data object StatsRoute
 
 @Serializable
-data object CreateHabitRoute
-
-@Serializable
-data class EditHabitRoute(val habitId: Long)
+data class HabitDetailRoute(val habitId: Long? = null)
 
 fun NavGraphBuilder.habitGraph(
     navController: NavController
 ) {
     composable<TodayRoute> {
         TodayRoot(
-            onNavigateToCreate = { navController.navigate(CreateHabitRoute) },
-            onNavigateToEdit = { navController.navigate(EditHabitRoute(it)) },
+            onNavigateToHabitDetail = { navController.navigate(HabitDetailRoute(it)) },
             onNavigateToStats = { navController.navigate(StatsRoute) }
         )
     }
@@ -36,13 +32,8 @@ fun NavGraphBuilder.habitGraph(
             onNavigateBack = { navController.popBackStack() }
         )
     }
-    composable<CreateHabitRoute> {
-        EditorRoot(
-            onNavigateBack = { navController.popBackStack() }
-        )
-    }
-    composable<EditHabitRoute> {
-        EditorRoot(
+    composable<HabitDetailRoute> {
+        HabitDetailRoot(
             onNavigateBack = { navController.popBackStack() }
         )
     }

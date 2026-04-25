@@ -57,8 +57,7 @@ import java.util.Locale
 
 @Composable
 fun TodayRoot(
-    onNavigateToCreate: () -> Unit,
-    onNavigateToEdit: (Long) -> Unit,
+    onNavigateToHabitDetail: (Long?) -> Unit,
     onNavigateToStats: () -> Unit,
     viewModel: TodayViewModel = koinViewModel()
 ) {
@@ -66,8 +65,7 @@ fun TodayRoot(
 
     ObserveAsEvents(viewModel.events) { event ->
         when (event) {
-            TodayEvent.NavigateToCreateHabit -> onNavigateToCreate()
-            is TodayEvent.NavigateToEditHabit -> onNavigateToEdit(event.habitId)
+            is TodayEvent.NavigateToHabitDetail -> onNavigateToHabitDetail(event.habitId)
             TodayEvent.NavigateToStats -> onNavigateToStats()
         }
     }
@@ -111,7 +109,7 @@ fun TodayScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { onAction(TodayAction.OnAddHabitClick) },
+                onClick = { onAction(TodayAction.OnHabitDetailClick()) },
                 containerColor = MaterialTheme.colorScheme.primary,
                 contentColor = Color.White,
                 shape = RoundedCornerShape(16.dp),
@@ -218,7 +216,7 @@ private fun HabitList(
             HabitItem(
                 habitWithStats = habitWithStats,
                 onToggle = { onAction(TodayAction.OnToggleHabit(habitWithStats.habit.id)) },
-                onClick = { onAction(TodayAction.OnHabitClick(habitWithStats.habit.id)) }
+                onClick = { onAction(TodayAction.OnHabitDetailClick(habitWithStats.habit.id)) }
             )
         }
     }
