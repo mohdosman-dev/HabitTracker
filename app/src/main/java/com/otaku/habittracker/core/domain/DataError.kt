@@ -20,6 +20,11 @@ sealed interface DataError : Error {
     enum class Local : DataError {
         DISK_FULL,
         NOT_FOUND,
+        ALREADY_EXISTS,
+        CONSTRAINT_VIOLATION,
+        IO_ERROR,
+        PERMISSION_DENIED,
+        CORRUPT_DATABASE,
         UNKNOWN
     }
 }

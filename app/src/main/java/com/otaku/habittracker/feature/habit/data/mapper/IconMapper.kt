@@ -54,6 +54,6 @@ fun Int.toHabitIcon(): HabitIcon {
         R.drawable.ic_gratitude -> HabitIcon.GRATITUDE
         R.drawable.ic_health -> HabitIcon.HEALTH
         R.drawable.ic_organize -> HabitIcon.ORGANIZE
-        else -> HabitIcon.RUN
+        else -> HabitIcon.RUN // Default fallback
     }
 }

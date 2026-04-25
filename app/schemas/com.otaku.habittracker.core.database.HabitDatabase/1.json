@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "edb470399da8457b5c688b7cb9fb438b",
+    "identityHash": "7d5b16b788da2076768a8279e78f1368",
     "entities": [
       {
         "tableName": "HabitEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `iconId` TEXT NOT NULL, `createdAtMillis` INTEGER NOT NULL, `repeatMon` INTEGER NOT NULL, `repeatTue` INTEGER NOT NULL, `repeatWed` INTEGER NOT NULL, `repeatThu` INTEGER NOT NULL, `repeatFri` INTEGER NOT NULL, `repeatSat` INTEGER NOT NULL, `repeatSun` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `iconName` TEXT NOT NULL, `createdAtMillis` INTEGER NOT NULL, `repeatMon` INTEGER NOT NULL, `repeatTue` INTEGER NOT NULL, `repeatWed` INTEGER NOT NULL, `repeatThu` INTEGER NOT NULL, `repeatFri` INTEGER NOT NULL, `repeatSat` INTEGER NOT NULL, `repeatSun` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -21,8 +21,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "iconId",
-            "columnName": "iconId",
+            "fieldPath": "iconName",
+            "columnName": "iconName",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -139,7 +139,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'edb470399da8457b5c688b7cb9fb438b')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7d5b16b788da2076768a8279e78f1368')"
     ]
   }
 }
